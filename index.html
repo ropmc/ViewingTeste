@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Viewing Room</title>
+    <style> 			#instructions {
+      width: 100%;
+      height: 100%;
+
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+
+      text-align: center;
+      font-size: 18px;
+      cursor: pointer;
+      color:antiquewhite;
+    }
+
+    #instructions2 {
+      width: 100%;
+      height: 100%;
+
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+
+      text-align: center;
+      font-size: 18px;
+      cursor: pointer;
+      color:antiquewhite;
+    }
+
+    #blocker {
+				position: absolute;
+				width: 100%;
+				height: 18.5%;
+				background-color: rgba(0,0,0,0.5);
+        pointer-events: auto;
+			}
+      #blocker2 {
+				position: absolute;
+				width: 12%;
+				height: 5%;
+				background-color: rgba(0,0,0,0.5);
+        pointer-events: auto;
+			}
+
+    </style>
+  </head>
+  <body>
+    <div class="experience">
+      <canvas class="experience-canvas"></canvas>
+    </div>
+    
+    <div id="blocker">
+			<div id="instructions">
+				<p style="font-size:36px">
+					Bem vindo ao Viewing Room. Clique na tela para começar. 
+				</p>
+				<p>
+					Use as setas ou as teclas 'WASD' para movimentar-se pelo ambiente.<br/>
+          Use o mouse para olhar a sala sob diferentes perspectivas.
+				</p>
+			</div>
+		</div>
+    
+    <div id='blocker2'>
+      <div id='instructions2'>
+        <p> Aperte ESC para sair. </p>
+      </div>
+    </div>
+
+    <script type="module" src="/main.js"></script>
+  </body>
+</html>
