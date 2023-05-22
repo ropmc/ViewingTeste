@@ -167,7 +167,7 @@ export default class Camera {
         //event.preventDefault();
 
         // Get the touch position relative to the canvas
-        if (!this.controls.isLocked) {
+        //if (!this.controls.isLocked) {
           this.controls.lock();
           this.controls.enabled = false;
           instructions.style.display = 'none';
@@ -176,7 +176,7 @@ export default class Camera {
           blocker2.style.display = 'block';
           this.speed = 0.02;
           this.sound.play();
-        }
+       // }
         
         const touch = event.touches[0];
         const x = touch.clientX / window.innerWidth * 2 - 1;
