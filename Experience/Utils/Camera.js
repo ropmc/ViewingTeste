@@ -12,7 +12,6 @@ export default class Camera {
     this.sizes = this.experience.sizes;
     this.speed = 0;
     blocker2.style.display='none';
-    console.log('Teste');
     
 
     this.canvas = this.experience.canvas;
@@ -185,7 +184,7 @@ export default class Camera {
             clientY: event.touches[0].clientY
           });
 
-          document.dispatchEvent(clickEvent);
+          this.canvas.dispatchEvent(clickEvent);
        // }
         
         const touch = event.touches[0];
