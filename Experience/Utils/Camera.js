@@ -168,7 +168,6 @@ export default class Camera {
         // Get the touch position relative to the canvas
         if (!this.controls.isLocked) {
           document.querySelector('#experience').click()
-          console.log('TouchStart');
           this.controls.enabled = true;
           instructions.style.display = 'none';
           blocker.style.display = 'none';
@@ -182,7 +181,6 @@ export default class Camera {
        // }
         
         const touch = event.touches[0];
-        console.log(touch.clientX);
         const x = touch.clientX / window.innerWidth * 2 - 1;
         const y = -(touch.clientY / window.innerHeight) * 2 + 1;
     
@@ -231,9 +229,7 @@ export default class Camera {
         );
       
         // Apply the rotation to the camera
-        this.perspectiveCamera.lookAt(euler);
-
-        console.log(euler);
+          console.log(event.alpha);
       }
       
       document.addEventListener('keydown', onKeyDown);
