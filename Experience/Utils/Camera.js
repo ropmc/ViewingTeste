@@ -166,7 +166,7 @@ export default class Camera {
         //event.preventDefault();
 
         // Get the touch position relative to the canvas
-        //if (!this.controls.isLocked) {
+        if (!this.controls.isLocked) {
           document.querySelector('#experience').click()
           console.log('TouchStart');
           this.controls.lock();
@@ -177,13 +177,8 @@ export default class Camera {
           blocker2.style.display = 'block';
           this.speed = 0.02;
           this.sound.play();
+        }
 
-          const clickEvent = new MouseEvent('click', {
-            bubbles: true,
-            cancelable: true,
-            clientX: event.touches[0].clientX,
-            clientY: event.touches[0].clientY
-          });
 
           this.canvas.dispatchEvent(clickEvent);
        // }
