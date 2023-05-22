@@ -93,21 +93,12 @@ export default class Camera {
     this.controls = new PointerLockControls(this.perspectiveCamera, this.canvas);
     const instructions = document.getElementById( 'instructions' );
     
-    //NEW
-    const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0 || navigator.msMaxTouchPoints > 0;
-
-    if (isTouchDevice) {
-      // Handle touch events for mobile controls
-      this.canvas.addEventListener('touchstart', (event) => this.onTouchStart(event), false);
-      this.canvas.addEventListener('touchend', () => this.onTouchEnd(), false);
-      this.canvas.addEventListener('touchmove', (event) => this.onTouchMove(event), false);
-    } else {
 
     // Add event listeners to enable and disable the pointer lock
     this.canvas.addEventListener('click', () => {
       this.controls.lock();
     });
-  }
+  
     this.controls.addEventListener('unlock', () => {
       this.controls.enabled = true;
       this.controls.velocity = 1000; //1000000000
