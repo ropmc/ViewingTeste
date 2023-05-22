@@ -218,9 +218,9 @@ export default class Camera {
       
       document.addEventListener('keydown', onKeyDown);
       document.addEventListener('keyup', onKeyUp);
-      document.addEventListener('touchstart', onTouchStart, false);
-      document.addEventListener('touchend', onTouchEnd, false);
-      document.addEventListener('touchmove', onTouchMove, false);
+      document.addEventListener('touchstart', onTouchStart, { passive: false });
+      document.addEventListener('touchend', onTouchEnd, { passive: false });
+      document.addEventListener('touchmove', onTouchMove, { passive: false });
       
   } 
 
