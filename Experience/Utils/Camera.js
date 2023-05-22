@@ -167,6 +167,7 @@ export default class Camera {
 
         // Get the touch position relative to the canvas
         //if (!this.controls.isLocked) {
+          document.querySelector('#experience').click()
           console.log('TouchStart');
           this.controls.lock();
           this.controls.enabled = false;
@@ -253,7 +254,6 @@ export default class Camera {
     
     this.colliderMesh.position.set(this.perspectiveCamera.position.x, 0.1, this.perspectiveCamera.position.z); //NOVIDADE 
     this.colliderMesh.rotation.copy(this.perspectiveCamera.rotation); //NOVIDADE
-
 
 
     this.resources = this.experience.resources;
