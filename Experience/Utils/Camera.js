@@ -177,7 +177,15 @@ export default class Camera {
           blocker2.style.display = 'block';
           this.speed = 0.02;
           this.sound.play();
-          this.perspectiveCamera.position.set(5, 1.5, -45);
+
+          const clickEvent = new MouseEvent('click', {
+            bubbles: true,
+            cancelable: true,
+            clientX: event.touches[0].clientX,
+            clientY: event.touches[0].clientY
+          });
+
+          document.dispatchEvent(clickEvent);
        // }
         
         const touch = event.touches[0];
