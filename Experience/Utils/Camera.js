@@ -237,7 +237,7 @@ export default class Camera {
       document.addEventListener('touchstart', onTouchStart, { passive: false });
       document.addEventListener('touchend', onTouchEnd, { passive: false });
       document.addEventListener('touchmove', onTouchMove, { passive: false });
-      document.addEventListener('deviceorientation', handleDeviceOrientation);
+      document.addEventListener('deviceorientation', handleDeviceOrientation, true);
       
   } 
 
