@@ -91,15 +91,23 @@ export default class Camera {
   setPointerLockControls() {
     
     this.controls = new PointerLockControls(this.perspectiveCamera, this.canvas);
-    this.controls.lock();
-    this.controls.lock();
     const instructions = document.getElementById( 'instructions' );
+    
+    //NEW
+    const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0 || navigator.msMaxTouchPoints > 0;
+
+    if (isTouchDevice) {
+      // Handle touch events for mobile controls
+      this.canvas.addEventListener('touchstart', (event) => this.onTouchStart(event), false);
+      this.canvas.addEventListener('touchend', () => this.onTouchEnd(), false);
+      this.canvas.addEventListener('touchmove', (event) => this.onTouchMove(event), false);
+    } else {
 
     // Add event listeners to enable and disable the pointer lock
     this.canvas.addEventListener('click', () => {
       this.controls.lock();
     });
-
+  }
     this.controls.addEventListener('unlock', () => {
       this.controls.enabled = true;
       this.controls.velocity = 1000; //1000000000
@@ -163,9 +171,60 @@ export default class Camera {
             break;
         }
       };
+
+      const onTouchStart = (event) => {
+        event.preventDefault();
+
+        // Get the touch position relative to the canvas
+        if (!this.controls.isLocked) {
+          this.controls.lock();
+          this.controls.enabled = false;
+          instructions.style.display = 'none';
+          blocker.style.display = 'none';
+          instructions2.style.display = '';
+          blocker2.style.display = 'block';
+          this.speed = 0.02;
+          this.sound.play();
+        }
+        
+        const touch = event.touches[0];
+        const x = touch.clientX / window.innerWidth * 2 - 1;
+        const y = -(touch.clientY / window.innerHeight) * 2 + 1;
+    
+        // Determine which direction to move based on touch position
+        this.moveForward = y > 0;
+        this.moveBackward = y < 0;
+        this.moveLeft = x < 0;
+        this.moveRight = x > 0;
+      };
+    
+      const onTouchEnd = () => {
+        this.moveForward = false;
+        this.moveBackward = false;
+        this.moveLeft = false;
+        this.moveRight = false;
+      };
+    
+      const onTouchMove = (event) => {
+        event.preventDefault();
+
+        // Get the touch position relative to the canvas
+        const touch = event.touches[0];
+        const x = touch.clientX / window.innerWidth * 2 - 1;
+        const y = -(touch.clientY / window.innerHeight) * 2 + 1;
+    
+        // Determine which direction to move based on touch position
+        this.moveForward = y > 0;
+        this.moveBackward = y < 0;
+        this.moveLeft = x < 0;
+        this.moveRight = x > 0;
+      };
       
       document.addEventListener('keydown', onKeyDown);
       document.addEventListener('keyup', onKeyUp);
+      document.addEventListener('touchstart', onTouchStart, false);
+      document.addEventListener('touchend', onTouchEnd, false);
+      document.addEventListener('touchmove', onTouchMove, false);
       
   } 
 
@@ -185,6 +244,8 @@ export default class Camera {
     this.orthographicCamera.updateProjectionMatrix();
   }
 
+  
+
   update() {
     function sleep(ms) {
       return new Promise(resolve => setTimeout(resolve, ms));
@@ -192,6 +253,7 @@ export default class Camera {
     
     this.colliderMesh.position.set(this.perspectiveCamera.position.x, 0.1, this.perspectiveCamera.position.z); //NOVIDADE 
     this.colliderMesh.rotation.copy(this.perspectiveCamera.rotation); //NOVIDADE
+
 
 
     this.resources = this.experience.resources;
