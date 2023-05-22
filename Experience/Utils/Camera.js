@@ -180,10 +180,10 @@ export default class Camera {
         }
 
 
-          this.canvas.dispatchEvent(clickEvent);
        // }
         
         const touch = event.touches[0];
+        console.log(touch.clientX);
         const x = touch.clientX / window.innerWidth * 2 - 1;
         const y = -(touch.clientY / window.innerHeight) * 2 + 1;
     
