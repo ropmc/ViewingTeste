@@ -183,9 +183,9 @@ export default class Camera {
        // }
         
         const touch = event.touches[0];
-        console.log(touch.pageX);
-        const x = touch.pageX / window.innerWidth * 2 - 1;
-        const y = -(touch.pageY / window.innerHeight) * 2 + 1;
+        console.log(touch.clientX);
+        const x = touch.clientX / window.innerWidth * 2 - 1;
+        const y = -(touch.clientY / window.innerHeight) * 2 + 1;
     
         // Determine which direction to move based on touch position
         this.moveForward = y > 0;
@@ -206,8 +206,8 @@ export default class Camera {
 
         // Get the touch position relative to the canvas
         const touch = event.touches[0];
-        const x = touch.pageX / window.innerWidth * 2 - 1;
-        const y = -(touch.pageY / window.innerHeight) * 2 + 1;
+        const x = touch.clientX / window.innerWidth * 2 - 1;
+        const y = -(touch.clientY / window.innerHeight) * 2 + 1;
     
         // Determine which direction to move based on touch position
         this.moveForward = y > 0;
