@@ -229,7 +229,7 @@ export default class Camera {
         );
       
         // Apply the rotation to the camera
-          console.log(event.alpha);
+          console.log(alpha);
       }
       
       document.addEventListener('keydown', onKeyDown);
