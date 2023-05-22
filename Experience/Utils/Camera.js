@@ -164,7 +164,7 @@ export default class Camera {
       };
 
       const onTouchStart = (event) => {
-        event.preventDefault();
+        //event.preventDefault();
 
         // Get the touch position relative to the canvas
         if (!this.controls.isLocked) {
@@ -197,7 +197,7 @@ export default class Camera {
       };
     
       const onTouchMove = (event) => {
-        event.preventDefault();
+        //event.preventDefault();
 
         // Get the touch position relative to the canvas
         const touch = event.touches[0];
