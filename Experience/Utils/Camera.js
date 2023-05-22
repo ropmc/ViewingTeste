@@ -232,6 +232,8 @@ export default class Camera {
       
         // Apply the rotation to the camera
         this.perspectiveCamera.lookAt(euler);
+
+        console.log(euler);
       }
       
       document.addEventListener('keydown', onKeyDown);
@@ -268,6 +270,7 @@ export default class Camera {
     
     this.colliderMesh.position.set(this.perspectiveCamera.position.x, 0.1, this.perspectiveCamera.position.z); //NOVIDADE 
     this.colliderMesh.rotation.copy(this.perspectiveCamera.rotation); //NOVIDADE
+
 
     //this.controls.enabled = true;
 
@@ -360,5 +363,6 @@ export default class Camera {
     //FIM PARANDO CONTROLES NAS COLISÕES
 
     velocity.set(0, 0, 0);
+
   }
 }  
