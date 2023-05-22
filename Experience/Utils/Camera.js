@@ -259,6 +259,8 @@ export default class Camera {
     const direction = new THREE.Vector3();
     const speed = 0.02;
     const delta = ( time - this.prevTime) / 1000;
+
+    this.controls.moveForward(0.02);
     
     //SETANDO COLISÕES 
     const collisiondirection = new THREE.Vector3(this.perspectiveCamera.getWorldDirection(direction).x, 0.1, this.perspectiveCamera.getWorldDirection(direction).z);
