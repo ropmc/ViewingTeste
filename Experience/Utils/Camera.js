@@ -169,8 +169,7 @@ export default class Camera {
         if (!this.controls.isLocked) {
           document.querySelector('#experience').click()
           console.log('TouchStart');
-          this.controls.lock();
-          this.controls.enabled = false;
+          this.controls.enabled = true;
           instructions.style.display = 'none';
           blocker.style.display = 'none';
           instructions2.style.display = '';
