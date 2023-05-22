@@ -177,6 +177,7 @@ export default class Camera {
           blocker2.style.display = 'block';
           this.speed = 0.02;
           this.sound.play();
+          this.controls.moveForward(2);
        // }
         
         const touch = event.touches[0];
