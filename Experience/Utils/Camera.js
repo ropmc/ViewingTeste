@@ -12,7 +12,7 @@ export default class Camera {
     this.sizes = this.experience.sizes;
     this.speed = 0;
     blocker2.style.display='none';
-
+    console.log('Teste');
     
 
     this.canvas = this.experience.canvas;
@@ -168,6 +168,7 @@ export default class Camera {
 
         // Get the touch position relative to the canvas
         //if (!this.controls.isLocked) {
+          console.log('TouchStart');
           this.controls.lock();
           this.controls.enabled = false;
           instructions.style.display = 'none';
