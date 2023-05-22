@@ -191,7 +191,6 @@ export default class Camera {
         this.moveBackward = y < 0;
         this.moveLeft = x < 0;
         this.moveRight = x > 0;
-        this.controls.moveForward(2);
       };
     
       const onTouchEnd = () => {
@@ -215,12 +214,32 @@ export default class Camera {
         this.moveLeft = x < 0;
         this.moveRight = x > 0;
       };
+
+      const handleDeviceOrientation = (event) => {
+        //if (!controls.isLocked) return;
+      
+        const alpha = event.alpha; // Z-axis rotation (in degrees)
+        const beta = event.beta;   // X-axis rotation (in degrees)
+        const gamma = event.gamma; // Y-axis rotation (in degrees)
+      
+        // Adjust the rotation values to match the camera's orientation
+        const euler = new THREE.Euler(
+          THREE.MathUtils.degToRad(beta),
+          THREE.MathUtils.degToRad(alpha),
+          -THREE.MathUtils.degToRad(gamma),
+          'YXZ'
+        );
+      
+        // Apply the rotation to the camera
+        this.perspectiveCamera.lookAt(euler);
+      }
       
       document.addEventListener('keydown', onKeyDown);
       document.addEventListener('keyup', onKeyUp);
       document.addEventListener('touchstart', onTouchStart, { passive: false });
       document.addEventListener('touchend', onTouchEnd, { passive: false });
       document.addEventListener('touchmove', onTouchMove, { passive: false });
+      document.addEventListener('deviceorientation', handleDeviceOrientation);
       
   } 
 
@@ -250,7 +269,7 @@ export default class Camera {
     this.colliderMesh.position.set(this.perspectiveCamera.position.x, 0.1, this.perspectiveCamera.position.z); //NOVIDADE 
     this.colliderMesh.rotation.copy(this.perspectiveCamera.rotation); //NOVIDADE
 
-    this.controls.enabled = true;
+    //this.controls.enabled = true;
 
 
     this.resources = this.experience.resources;
