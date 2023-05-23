@@ -105,11 +105,11 @@ export default class Camera {
     _euler.setFromQuaternion(camera.quaternion);
     
     if (this.stickData.x !== 0) {
-      _euler.y -= this.stickData.x * 0.0001;
+      _euler.y -= this.stickData.x * 0.00004;
     }
     
     if (this.stickData.y !== 0) {
-      _euler.x += this.stickData.y * 0.0001;
+      _euler.x += this.stickData.y * 0.00004;
     }
     
     _euler.x = Math.max((Math.PI / 2) - (Math.PI), Math.min((Math.PI / 2) - 0, _euler.x));
@@ -117,8 +117,8 @@ export default class Camera {
   }
 
   JoystickControls2() {
-    this.controls.moveForward(this.stickData2.y*0.0005);
-    this.controls.moveRight(this.stickData2.x*0.0005);
+    this.controls.moveForward(this.stickData2.y*0.0002);
+    this.controls.moveRight(this.stickData2.x*0.0002);
 
   }
 
