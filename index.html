@@ -52,6 +52,14 @@
         z-index: 0;
 			}
 
+      #joystick {
+        position: absolute;
+        width: 100px;
+        height: 100px;
+        background-color: rgba(0,0,0,0.5);
+        z-index: 5;
+      }
+
     </style>
   </head>
   <body>
@@ -76,6 +84,28 @@
         <p> Aperte ESC para sair. </p>
       </div>
     </div> 
+
+    <div id="joystick"><script src='./Experience/Utils/JoyStick/joy.js'></script></div>
+
+    <script type="text/javascript">
+      //var stickData = { x: 0, y: 0 };
+      
+      var Joy1 = new JoyStick('joystick', {}, function(stickData){
+      if (stickData.x) {
+        dispatchStickData();
+      }
+        function dispatchStickData() {
+          var eventData = { x: stickData.x, y: stickData.y};
+          var event = new CustomEvent ('stickDataUpdate', { detail: eventData });
+          document.dispatchEvent(event);
+          //console.log(eventData);
+        }
+
+        //setInterval(function() {
+          //dispatchStickData();} , 200);
+
+    });
+    </script>
 
     <script type="module" src="/main.js"></script>
   </body>

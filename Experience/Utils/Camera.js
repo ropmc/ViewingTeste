@@ -27,8 +27,6 @@ export default class Camera {
     this.raycasterRight = new THREE.Raycaster( new THREE.Vector3(), new THREE.Vector3( 0, - 1, 0 ), 0, RaycasterThreshold );  //NOVIDADE
     //this.raycasterLeft = new THREE.Raycaster( new THREE.Vector3(), new THREE.Vector3( 0, - 1, 0 ), 0, RaycasterThreshold );  //NOVIDADE
 
-
-
     this.createPerspectiveCamera();
     this.createOrthographicCamera();
     this.setPointerLockControls();
@@ -37,6 +35,14 @@ export default class Camera {
     const listener = new THREE.AudioListener();
     this.perspectiveCamera.add( listener );
     this.sound = new THREE.PositionalAudio( listener );
+    this.stickData = { x: 0 , y: 0 }; 
+
+    document.addEventListener('stickDataUpdate', (event) => {
+      if (event.detail) {
+        this.stickData = event.detail;
+      }
+      //stickMove(this.stickData.x, this.stickData.y);
+    });
 
     const audioLoader = new THREE.AudioLoader();
     audioLoader.load('/music/or2.wav', ( buffer ) => {
@@ -91,6 +97,7 @@ export default class Camera {
     
     this.controls = new PointerLockControls(this.perspectiveCamera, this.canvas);
     const instructions = document.getElementById( 'instructions' );
+
     
 
     // Add event listeners to enable and disable the pointer lock
@@ -118,6 +125,7 @@ export default class Camera {
       blocker2.style.display = 'block';
       this.sound.play()
     });
+
 
 
     const onKeyDown = (event) => {
@@ -212,32 +220,12 @@ export default class Camera {
         this.moveLeft = x < 0;
         this.moveRight = x > 0;
       };
-
-      const handleDeviceOrientation = (event) => {
-        //if (!controls.isLocked) return;
-      
-        const alpha = event.alpha; // Z-axis rotation (in degrees)
-        const beta = event.beta;   // X-axis rotation (in degrees)
-        const gamma = event.gamma; // Y-axis rotation (in degrees)
-      
-        // Adjust the rotation values to match the camera's orientation
-        const euler = new THREE.Euler(
-          THREE.MathUtils.degToRad(beta),
-          THREE.MathUtils.degToRad(alpha),
-          -THREE.MathUtils.degToRad(gamma),
-          'YXZ'
-        );
-      
-        // Apply the rotation to the camera
-          console.log("Teste");
-      }
       
       document.addEventListener('keydown', onKeyDown);
       document.addEventListener('keyup', onKeyUp);
-      document.addEventListener('touchstart', onTouchStart, { passive: false });
-      document.addEventListener('touchend', onTouchEnd, { passive: false });
-      document.addEventListener('touchmove', onTouchMove, { passive: false });
-      document.addEventListener('deviceorientation', handleDeviceOrientation, true);
+      //document.addEventListener('touchstart', onTouchStart, { passive: false });
+      //document.addEventListener('touchend', onTouchEnd, { passive: false });
+      //document.addEventListener('touchmove', onTouchMove, { passive: false });
       
   } 
 
@@ -266,9 +254,6 @@ export default class Camera {
     
     this.colliderMesh.position.set(this.perspectiveCamera.position.x, 0.1, this.perspectiveCamera.position.z); //NOVIDADE 
     this.colliderMesh.rotation.copy(this.perspectiveCamera.rotation); //NOVIDADE
-
-
-    //this.controls.enabled = true;
 
 
     this.resources = this.experience.resources;
@@ -323,7 +308,6 @@ export default class Camera {
     //}
 
 
-
     velocity.x -= velocity.x * 10.0 * delta;
     velocity.z -= velocity.z * 10.0 * delta;
 
@@ -338,7 +322,13 @@ export default class Camera {
     if ( this.moveLeft || this.moveRight ) velocity.x -= direction.x * this.speed;
 
     this.controls.moveRight( - velocity.x );
+
     this.controls.moveForward( - velocity.z );
+
+    //console.log(this.stickData);
+    this.controls.moveForward(this.stickData.y*0.0002);
+    this.controls.moveRight(this.stickData.x*0.0002)
+    console.log(this.stickData.y*0.0002)
     
     //PARANDO CONTROLES NAS COLISÕES
     if (intersects.length > 0) {
