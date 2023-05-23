@@ -58,6 +58,18 @@
         height: 100px;
         background-color: rgba(0,0,0,0.5);
         z-index: 5;
+        bottom : 0;
+        right: 0;
+      }
+      
+      #joystick2 {
+        position: absolute;
+        width: 100px;
+        height: 100px;
+        background-color: rgba(0,0,0,0.5);
+        z-index: 5;
+        left:0;
+        bottom: 0;
       }
 
     </style>
@@ -86,6 +98,7 @@
     </div> 
 
     <div id="joystick"><script src='/joy.js'></script></div>
+    <div id="joystick2"><script src='/joy.js'></script></div>
 
     <script type="text/javascript">
       //var stickData = { x: 0, y: 0 };
@@ -105,6 +118,24 @@
           //dispatchStickData();} , 200);
 
     });
+
+    var Joy2 = new JoyStick('joystick2', {}, function(stickData2){
+      if (stickData2.x) {
+        dispatchStickData2();
+      }
+        function dispatchStickData2() {
+          var eventData = { x: stickData2.x, y: stickData2.y};
+          var event = new CustomEvent ('stickDataUpdate2', { detail: eventData });
+          document.dispatchEvent(event);
+          //console.log(eventData);
+        }
+
+        //setInterval(function() {
+          //dispatchStickData();} , 200);
+
+    });
+
+
     </script>
 
     <script type="module" src="/main.js"></script>

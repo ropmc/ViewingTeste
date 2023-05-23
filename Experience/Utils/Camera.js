@@ -2,7 +2,7 @@ import * as THREE from 'three';
 import Experience from './Experience.js';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import { PointerLockControls } from 'three/examples/jsm/controls/PointerLockControls.js';
-import { Raycaster } from 'three'; //NOVIDADE
+import { Euler } from 'three'; //NOVIDADE
 
 export default class Camera {
   constructor() {
@@ -36,12 +36,18 @@ export default class Camera {
     this.perspectiveCamera.add( listener );
     this.sound = new THREE.PositionalAudio( listener );
     this.stickData = { x: 0 , y: 0 }; 
+    this.stickData2 = { x: 0 , y: 0 };
 
     document.addEventListener('stickDataUpdate', (event) => {
       if (event.detail) {
         this.stickData = event.detail;
       }
-      //stickMove(this.stickData.x, this.stickData.y);
+    });
+
+    document.addEventListener('stickDataUpdate2', (event) => {
+      if (event.detail) {
+        this.stickData2 = event.detail;
+      }
     });
 
     const audioLoader = new THREE.AudioLoader();
@@ -91,6 +97,29 @@ export default class Camera {
 
     const axesHelper = new THREE.AxesHelper(5);
     //this.scene.add(axesHelper);
+  }
+
+  JoystickControls() {
+    const _euler = new Euler(0, 0, 0, 'YXZ');
+    const camera = this.perspectiveCamera;
+    _euler.setFromQuaternion(camera.quaternion);
+    
+    if (this.stickData.x !== 0) {
+      _euler.y -= this.stickData.x * 0.00002;
+    }
+    
+    if (this.stickData.y !== 0) {
+      _euler.x += this.stickData.y * 0.00002;
+    }
+    
+    _euler.x = Math.max((Math.PI / 2) - (Math.PI), Math.min((Math.PI / 2) - 0, _euler.x));
+    camera.quaternion.setFromEuler(_euler);
+  }
+
+  JoystickControls2() {
+    this.controls.moveForward(this.stickData2.y*0.0001);
+    this.controls.moveRight(this.stickData2.x*0.0001);
+
   }
 
   setPointerLockControls() {
@@ -325,10 +354,27 @@ export default class Camera {
 
     this.controls.moveForward( - velocity.z );
 
-    //console.log(this.stickData);
-    this.controls.moveForward(this.stickData.y*0.0002);
-    this.controls.moveRight(this.stickData.x*0.0002)
-    console.log(this.stickData.y*0.0002)
+    //this.controls.moveForward(this.stickData.y*0.0002);
+    //this.controls.moveRight(this.stickData.x*0.0002)
+  
+    //const _euler = new Euler(0, 0, 0, 'YXZ');
+    //const camera = this.perspectiveCamera;
+   // _euler.setFromQuaternion(camera.quaternion);
+    
+   // if (this.stickData.x !== 0) {
+    //  _euler.y -= this.stickData.x * 0.00002;
+    //}
+    
+    //if (this.stickData.y !== 0) {
+    //  _euler.x += this.stickData.y * 0.00002;
+   // }
+    
+    //_euler.x = Math.max((Math.PI / 2) - (Math.PI), Math.min((Math.PI / 2) - 0, _euler.x));
+   // camera.quaternion.setFromEuler(_euler);
+
+   this.JoystickControls();
+   this.JoystickControls2();
+  
     
     //PARANDO CONTROLES NAS COLISÕES
     if (intersects.length > 0) {
