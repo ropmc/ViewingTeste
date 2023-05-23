@@ -60,6 +60,8 @@
         z-index: 5;
         bottom : 0;
         right: 0;
+        display: none;
+        border-radius: 100%;
       }
       
       #joystick2 {
@@ -70,6 +72,26 @@
         z-index: 5;
         left:0;
         bottom: 0;
+        display: none;
+        border-radius: 100%;
+      }
+
+      @media only screen and (max-width: 767px) {
+        #joystick2 {
+          display: block;
+        }
+
+        #joystick {
+          display: block;
+        }
+        
+        #blocker{
+          display: none;
+        }
+
+        #blocker2{
+          display: none;
+        }
       }
 
     </style>
